@@ -55,7 +55,7 @@ class GetBaiduNews:
         return res
 
     @staticmethod
-    def get_news_title_and_urls(html: str) -> list[tuple]:
+    def get_news_title_and_urls(html: str) -> list:
         """
         解析获得新闻标题和url
         :param html: 原始html内容
