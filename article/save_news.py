@@ -13,13 +13,13 @@ if __name__ != '__main__':
 
 def save_news(news: dict):
     if len(news['content']) < 35:
-        print(f'\033[35m -{news["title"]} 内容过短，不保存\033[0m')
+        # print(f'\033[35m -{news["title"]} 内容过短，不保存\033[0m')
         return None
     if not Article.objects.filter(title=news['title']):
         Article.objects.create(**news)
-        print(f'\033[32m -{news["title"]} 保存成功\033[0m')
-    else:
-        print(f'\033[34m -{news["title"]} 已存在\033[0m')
+    #     print(f'\033[32m -{news["title"]} 保存成功\033[0m')
+    # else:
+    #     print(f'\033[34m -{news["title"]} 已存在\033[0m')
 
 
 if __name__ == '__main__':
