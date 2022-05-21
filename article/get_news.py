@@ -2,11 +2,11 @@
 # @Author     : HUII
 # @File       : get_news.py
 # @Description: 爬取资讯
+import datetime
 import json
 import random
 import re
 import time
-import datetime
 
 # import requests
 from bs4 import BeautifulSoup

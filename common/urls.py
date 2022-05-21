@@ -2,10 +2,18 @@
 # @Author     : HUII
 # @File       : urls.py
 # @Description:
-from django.urls import path
-from rest_framework_simplejwt.views import TokenRefreshView
 
-from .views import *
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+
+from common.views.login_record import UserLoginRecordViewSet
+from common.views.ocr import GetOcrUrlView, GetOcrVoiceView
+
+router = DefaultRouter()
+router.register('record', UserLoginRecordViewSet)
+
 urlpatterns = [
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('', include(router.urls)),
+    path('ocr/url', GetOcrUrlView.as_view()),
+    path('ocr/voice', GetOcrVoiceView.as_view()),
 ]

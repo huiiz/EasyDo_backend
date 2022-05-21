@@ -2,8 +2,9 @@
 # @Author     : HUII
 # @File       : save_news.py
 # @Description: 将数据存入数据库
-import django
 import os
+
+import django
 
 from article.get_news import GetBaiduNews
 

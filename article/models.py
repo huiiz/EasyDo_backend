@@ -38,12 +38,14 @@ class ReadingRecord(CoreModel):
                                 db_constraint=False, null=True, blank=True, help_text="文章")
     user = models.ForeignKey(to='user.Users', verbose_name='用户', db_column='user', on_delete=models.CASCADE,
                              db_constraint=False, null=True, blank=True, help_text="用户")
-    article_cate = models.ForeignKey(to='ArticleCategory', verbose_name='对应文章分类', db_column='acate',
-                                     on_delete=models.CASCADE,
-                                     db_constraint=False, null=True, blank=True, help_text="对应文章分类")
+    # article_cate = models.ForeignKey(to='ArticleCategory', verbose_name='对应文章分类', db_column='acate',
+    #                                  on_delete=models.CASCADE,
+    #                                  db_constraint=False, null=True, blank=True, help_text="对应文章分类")
 
     class Meta:
         db_table = table_prefix + "reading_record"
         verbose_name = '用户阅读记录表'
         verbose_name_plural = verbose_name
         ordering = ('-id',)
+
+# class RecommendRecord(CoreModel):

@@ -2,9 +2,9 @@
 # @Author     : HUII
 # @File       : test_read_article.py
 # @Description:
-import django
 import os
 
+import django
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'EasyDo.settings')
 django.setup()

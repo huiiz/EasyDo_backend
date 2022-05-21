@@ -1,16 +1,15 @@
 # @Time       : 2022/4/14 21:32
 # @Author     : HUII
-# @File       : Login.py
+# @File       : login.py
 # @Description:
-from django.contrib.auth import authenticate
-from rest_framework.views import APIView
+from django.contrib.auth.models import update_last_login
 from rest_framework import serializers
+from rest_framework.views import APIView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from user.models import Users
-from utils.json_response import DetailResponse, ErrorResponse
+from utils.json_response import DetailResponse
 
 
 # class UserSerializer(serializers.Serializer):
@@ -79,9 +78,6 @@ class LoginSerializer(TokenObtainPairSerializer):
         self.fields.pop('password')
 
     def validate(self, attrs):
-        # data = super().validate(attrs)
-        # print(attrs)
-        # print(attrs['phone'])
         self.user = Users.objects.filter(**attrs)
         if not self.user:
             self.user = Users.objects.create(phone=attrs['phone'], username=attrs['phone'])
@@ -91,6 +87,7 @@ class LoginSerializer(TokenObtainPairSerializer):
             self.user = self.user[0]
         refresh = self.get_token(self.user)
         data = {"refresh": str(refresh), "access": str(refresh.access_token)}
+        update_last_login(None, self.user)
         # data['username'] = self.user.name
         # data['userId'] = self.user.id
         return {

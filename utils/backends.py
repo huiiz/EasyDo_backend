@@ -1,9 +1,7 @@
-import hashlib
 import logging
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
-from django.utils import timezone
 
 from user.models import Users
 
@@ -19,12 +17,14 @@ class CustomBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
         try:
             usr = Users.objects.get(username=username)
-            if usr.manager_type == 0:
+            if not password:
                 return usr
             else:
                 if usr.check_password(password):
                     return usr
-        except :
+                else:
+                    return None
+        except:
             return None
         # return Users.objects.get(1)
         # print(',,,,,')

@@ -1,5 +1,6 @@
 import hashlib
 
+from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -16,12 +17,23 @@ class Users(AbstractUser, CoreModel):
         (1, "大BOSS"),
         (2, "用户管理员"),
         (3, "文章管理员"),
+        (-2, "申请成为用户管理员"),
+        (-3, "申请成为文章管理员"),
     )
     manager_type = models.IntegerField(choices=MANAGER_TYPE, default=0, verbose_name="用户类型", null=True, blank=True,
                                        help_text="用户类型")
 
     def set_password(self, raw_password):
         super().set_password(hashlib.md5(raw_password.encode(encoding='UTF-8')).hexdigest())
+
+    def check_password(self, raw_password):
+        def setter(raw_password):
+            self.set_password(raw_password)
+            # Password hash upgrades shouldn't be considered password changes.
+            self._password = None
+            self.save(update_fields=["password"])
+
+        return check_password(hashlib.md5(raw_password.encode(encoding='UTF-8')).hexdigest(), self.password, setter)
 
     class Meta:
         db_table = table_prefix + "users"
